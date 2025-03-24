@@ -72,7 +72,7 @@ export function AnalyticsGraphs({ results }: AnalyticsGraphsProps) {
                   fill="#8884d8"
                   dataKey="value"
                 >
-                  {issueDistribution.map((_, index) => (
+                  {issueDistribution.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>

@@ -24,6 +24,5 @@ export default defineConfig({
         }
       }
     }
-  },
-  base: '/carbon-crunch/',
+  }
 })
