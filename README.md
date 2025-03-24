@@ -145,6 +145,8 @@ npm run build
 
 2. The built files will be in the `frontend/dist` directory
 
+![alt text](image-5.png)
+
 ## Contributing
 
 1. Fork the repository
