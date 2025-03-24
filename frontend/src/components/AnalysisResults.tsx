@@ -1,19 +1,11 @@
-import { Paper, Title, Text, Grid, Badge, Stack, Group, ThemeIcon, Code, Box, Divider } from '@mantine/core';
+import { Paper, Title, Text, Grid, Badge, Stack, Group } from '@mantine/core';
 import { IconCheck, IconX, IconAlertTriangle } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 import { RadialBarChart, RadialBar, ResponsiveContainer, Tooltip } from 'recharts';
-import ReactMarkdown from 'react-markdown';
-import type { Components } from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { AnalysisResult, Recommendation } from '../types/analysis';
 import './AnalysisResults.css';
 
 // Add type for code component props
-interface CodeProps {
-    inline?: boolean;
-    className?: string;
-    children: React.ReactNode;
-}
 
 interface AnalysisResultsProps {
     results: AnalysisResult;
@@ -126,159 +118,25 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                                         radius="sm"
                                         style={{
                                             borderLeft: `4px solid ${
-                                                rec.priority === 'High' ? '#e74c3c' :
-                                                rec.priority === 'Medium' ? '#f1c40f' : '#2ecc71'
-                                            }`,
+                                                rec.priority.toLowerCase() === 'high' ? '#e74c3c' :
+                                                rec.priority.toLowerCase() === 'medium' ? '#f1c40f' : '#2ecc71'
+                                            }`
                                         }}
                                     >
-                                        <Group gap="xs" justify="apart" mb="xs">
-                                            <Group>
-                                                <ThemeIcon
-                                                    size="sm"
-                                                    variant="light"
-                                                    color={
-                                                        rec.priority === 'High' ? 'red' :
-                                                        rec.priority === 'Medium' ? 'yellow' : 'green'
-                                                    }
-                                                >
-                                                    {getSeverityIcon(rec.priority)}
-                                                </ThemeIcon>
-                                                <Text fw={500}>{rec.category}</Text>
-                                            </Group>
-                                            <Badge
-                                                variant="light"
-                                                color={
-                                                    rec.priority === 'High' ? 'red' :
-                                                    rec.priority === 'Medium' ? 'yellow' : 'green'
-                                                }
-                                            >
-                                                {rec.priority}
-                                            </Badge>
+                                        <Group>
+                                            {getSeverityIcon(rec.priority)}
+                                            <Text fw={500}>{rec.category}</Text>
                                         </Group>
-                                        <Text size="sm">{rec.suggestion}</Text>
-                                        {rec.example_violation && (
-                                            <Text size="xs" color="dimmed" mt="xs">
-                                                Example: {rec.example_violation}
-                                            </Text>
-                                        )}
+                                        <Text size="sm" color="dimmed" mt="xs">
+                                            {rec.suggestion}
+                                        </Text>
                                     </Paper>
                                 </motion.div>
                             ))}
                         </Stack>
                     </Paper>
                 </Grid.Col>
-
-                {/* Separate AI Analysis Section */}
-                {results.groq_analysis?.status === 'success' && (
-                    <>
-                        <Grid.Col span={12}>
-                            <Divider my="xl" label="Additional AI Analysis" labelPosition="center" />
-                        </Grid.Col>
-                        
-                    <Grid.Col span={12}>
-                        <Paper shadow="sm" radius="md" p="xl">
-                                <Title order={2} mb="xl">Extended Code Analysis</Title>
-                            <Grid gutter="md">
-                                    {Object.entries(results.groq_analysis.insights || {}).map(([category, insights], index) => {
-                                        // Skip categories that are already covered in the main analysis
-                                        if (['documentation', 'naming_conventions', 'function_modularity', 'formatting', 'reusability', 'best_practices'].includes(category)) {
-                                            return null;
-                                        }
-                                        
-                                        return insights.length > 0 && (
-                                        <Grid.Col key={category} span={6}>
-                                            <motion.div
-                                                variants={itemVariants}
-                                                initial="hidden"
-                                                animate="visible"
-                                                transition={{ delay: index * 0.1 }}
-                                            >
-                                                    <Paper p="md" radius="sm" withBorder>
-                                                    <Title order={4} mb="md">
-                                                        {category.split('_').map(word => 
-                                                            word.charAt(0).toUpperCase() + word.slice(1)
-                                                        ).join(' ')}
-                                                    </Title>
-                                                        <Stack gap="md">
-                                                        {insights.map((insight: any, i: number) => (
-                                                                <Box key={i}>
-                                                                    <div className="markdown-content">
-                                                                        <ReactMarkdown 
-                                                                            remarkPlugins={[remarkGfm]}
-                                                                            components={{
-                                                                                p: ({ children }) => (
-                                                                                    <Text mb="xs" style={{ whiteSpace: 'pre-wrap' }}>{children}</Text>
-                                                                                ),
-                                                                                code: ({ children, inline }: any) => {
-                                                                                    return !inline ? (
-                                                                                        <Box mb="xs">
-                                                                                            <Code 
-                                                                                                block 
-                                                                                                style={{ 
-                                                                                                    backgroundColor: '#f8f9fa',
-                                                                                                    padding: '12px',
-                                                                                                    borderRadius: '4px',
-                                                                                                    fontSize: '0.9em'
-                                                                                                }}
-                                                                                            >
-                                                                                                {String(children).replace(/\n$/, '')}
-                                                                                            </Code>
-                                                                                        </Box>
-                                                                                    ) : (
-                                                                                        <Code 
-                                                                                            style={{ 
-                                                                                                backgroundColor: '#f8f9fa',
-                                                                                                padding: '2px 6px',
-                                                                                                borderRadius: '4px',
-                                                                                                fontSize: '0.9em'
-                                                                                            }}
-                                                                                        >
-                                                                                            {children}
-                                                                                        </Code>
-                                                                                    );
-                                                                                },
-                                                                                ul: ({ children }) => (
-                                                                                    <Stack gap="xs">
-                                                                                        {children}
-                                                                                    </Stack>
-                                                                                ),
-                                                                                li: ({ children }) => (
-                                                                                    <Group gap="xs" justify="flex-start">
-                                                                                        <Text>•</Text>
-                                                                                        <Text size="sm" style={{ flex: 1 }}>{children}</Text>
-                                                                                    </Group>
-                                                                                ),
-                                                                                h3: ({ children }) => (
-                                                                                    <Title order={3} mb="sm" size="h4">{children}</Title>
-                                                                                ),
-                                                                                h4: ({ children }) => (
-                                                                                    <Title order={4} mb="sm" size="h5">{children}</Title>
-                                                                                ),
-                                                                                strong: ({ children }) => (
-                                                                                    <Text span fw={700}>{children}</Text>
-                                                                                ),
-                                                                                em: ({ children }) => (
-                                                                                    <Text span fs="italic">{children}</Text>
-                                                                                )
-                                                                            }}
-                                                                        >
-                                                                            {insight}
-                                                                        </ReactMarkdown>
-                                                                    </div>
-                                                                </Box>
-                                                            ))}
-                                                        </Stack>
-                                                </Paper>
-                                            </motion.div>
-                                        </Grid.Col>
-                                        );
-                                    })}
-                            </Grid>
-                        </Paper>
-                    </Grid.Col>
-                    </>
-                )}
             </Grid>
         </motion.div>
     );
-} 
+}
