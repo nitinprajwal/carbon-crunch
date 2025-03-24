@@ -1,0 +1,29 @@
+.markdown-content {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.markdown-content p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.markdown-content code {
+    font-family: 'Fira Code', 'Consolas', monospace;
+}
+
+.markdown-content ul {
+    margin-bottom: 1rem;
+}
+
+.markdown-content h3, .markdown-content h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.markdown-content strong {
+    font-weight: 600;
+}
+
+.markdown-content em {
+    font-style: italic;
+} 
