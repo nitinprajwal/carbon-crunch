@@ -38,7 +38,7 @@ export function FileUpload({ onFileSelect, isLoading }: FileUploadProps) {
             style={{
                 padding: '2rem',
                 borderRadius: theme.radius.md,
-                backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+                backgroundColor: theme.colors.dark[6],
             }}
         >
             <Dropzone
@@ -60,19 +60,19 @@ export function FileUpload({ onFileSelect, isLoading }: FileUploadProps) {
                     transform: isDragOver ? 'scale(1.02)' : 'scale(1)',
                 }}
             >
-                <Group position="center" spacing="xl" style={{ minHeight: rem(220), pointerEvents: 'none' }}>
+                <Group justify="center" gap="xl" style={{ minHeight: rem(220), pointerEvents: 'none' }}>
                     <Dropzone.Accept>
                         <IconUpload
                             size="3.2rem"
                             stroke={1.5}
-                            color={theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]}
+                            color={theme.colors[theme.primaryColor][4]}
                         />
                     </Dropzone.Accept>
                     <Dropzone.Reject>
                         <IconX
                             size="3.2rem"
                             stroke={1.5}
-                            color={theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]}
+                            color={theme.colors.red[4]}
                         />
                     </Dropzone.Reject>
                     <Dropzone.Idle>
@@ -95,12 +95,12 @@ export function FileUpload({ onFileSelect, isLoading }: FileUploadProps) {
                 </Group>
             </Dropzone>
 
-            <Group position="center" mt="md">
+            <Group justify="center" mt="md">
                 <Button
                     onClick={() => openRef.current?.()}
                     variant="light"
                     loading={isLoading}
-                    leftIcon={<IconUpload size="1rem" />}
+                    leftSection={<IconUpload size="1rem" />}
                 >
                     Select File
                 </Button>

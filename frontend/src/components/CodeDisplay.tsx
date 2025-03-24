@@ -28,7 +28,7 @@ export function CodeDisplay({ originalCode, fileName, language }: CodeDisplayPro
                 radius="md"
                 p="md"
                 style={{
-                    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+                    backgroundColor: theme.colors.dark[7],
                 }}
             >
                 <Title order={3} mb="sm">
@@ -41,7 +41,7 @@ export function CodeDisplay({ originalCode, fileName, language }: CodeDisplayPro
                     style={{
                         maxHeight: '600px',
                         overflow: 'auto',
-                        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+                        backgroundColor: theme.colors.dark[8],
                     }}
                 >
                     <CodeHighlight
@@ -50,7 +50,7 @@ export function CodeDisplay({ originalCode, fileName, language }: CodeDisplayPro
                         withCopyButton
                         styles={{
                             copy: {
-                                backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+                                backgroundColor: theme.colors.dark[6],
                             },
                             pre: {
                                 backgroundColor: 'transparent',

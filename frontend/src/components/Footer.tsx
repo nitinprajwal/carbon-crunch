@@ -3,11 +3,11 @@ import { IconBrandGithub, IconBrandLinkedin } from '@tabler/icons-react';
 
 export function Footer() {
   return (
-    <Group position="apart" py="md" sx={{ height: '60px' }}>
-      <Text size="sm" weight={500}>
+    <Group justify="apart" py="md" style={{ height: '60px' }}>
+      <Text size="sm" fw={500}>
         © 2025 Developed by Nitin Prajwal R
       </Text>
-      <Group spacing={12}>
+      <Group gap={12}>
         <ActionIcon
           size="lg"
           variant="light"
