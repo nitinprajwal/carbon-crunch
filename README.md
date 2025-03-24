@@ -94,6 +94,12 @@ The application will be available at `http://localhost:5173`
 - Real-time data updates
 - Responsive design
 
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
+
 ### User Interface
 - Drag and drop file upload
 - Syntax highlighted code display
