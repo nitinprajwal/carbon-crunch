@@ -7,70 +7,33 @@ A modern web application for analyzing code quality and providing detailed insig
 - 📊 Real-time code analysis
 - 📈 Visual analytics with interactive graphs
 - 🎨 Clean, modern UI
-- 💻 Support for multiple languages:
-  - Python (.py)
-  - JavaScript (.js)
-  - React (.jsx)
+- 💻 Support for multiple programming languages
 - 📝 Detailed code quality metrics
 - 🔍 Issue detection and recommendations
 
-## Project Structure
+## Tech Stack
 
-```
-Carbon Crunch/
-├── frontend/                # React frontend
-│   ├── public/             # Static files
-│   │   ├── components/    # React components
-│   │   ├── types/        # TypeScript types
-│   │   └── styles/       # CSS styles
-│   ├── package.json      # Frontend dependencies
-│   └── vite.config.ts    # Vite configuration
-└── backend/              # Python FastAPI backend
-    ├── main.py          # Main application file
-    └── requirements.txt # Python dependencies
-```
+### Frontend
+- React with TypeScript
+- Mantine UI Components
+- Recharts for data visualization
+- Syntax highlighting for code display
 
-## Prerequisites
+### Backend
+- Python 3.12+
+- FastAPI for API endpoints
+- Advanced code analysis algorithms
 
-- Node.js 18+ for frontend
-- Python 3.12+ for backend
-- npm or yarn package manager
+## Getting Started
 
-## Frontend Setup
+### Backend Setup
 
-1. Navigate to the frontend directory:
-```powershell
-cd frontend
-```
-
-2. Install dependencies:
-```powershell
-npm install
-# or
-yarn install
-```
-
-3. Start the development server:
-```powershell
-npm run dev
-# or
-yarn dev
-```
-
-The frontend will be available at `http://localhost:5173`
-
-## Backend Setup
-
-1. Navigate to the backend directory:
-```powershell
-cd backend
-```
-
-2. Create and activate a virtual environment:
+1. Make sure you have Python 3.12+ installed
+2. Create a virtual environment:
 ```powershell
 python -m venv venv
-.\venv\Scripts\activate  # Windows
-source venv/bin/activate # Linux/Mac
+.\venv\Scripts\activate  # For Windows
+source venv/bin/activate # For Unix/MacOS
 ```
 
 3. Install dependencies:
@@ -78,61 +41,111 @@ source venv/bin/activate # Linux/Mac
 pip install -r requirements.txt
 ```
 
-4. Start the development server:
+4. Start the backend server:
 ```powershell
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 The API will be available at `http://localhost:8000`
 
+### Frontend Setup
+
+1. Make sure you have Node.js and npm installed
+2. Navigate to the frontend directory:
+```powershell
+cd frontend
+```
+
+3. Install dependencies:
+```powershell
+npm install
+```
+
+4. Start the development server:
+```powershell
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`
+
 ## API Endpoints
 
 - `GET /`: Health check endpoint
 - `POST /analyze-code`: Upload and analyze code files
   - Accepts: `.py`, `.js`, `.jsx` files
-  - Returns: Analysis results including:
+  - Returns: Detailed analysis results including:
     - Code quality metrics
     - Issue detection
     - Recommendations
     - Severity breakdown
 
+## Features in Detail
+
+### Code Analysis
+- Syntax error detection
+- Code style checking
+- Best practices validation
+- Complexity analysis
+- Function modularity assessment
+
+### Visualization
+- Interactive bar charts for code metrics
+- Pie charts for issue distribution
+- Real-time data updates
+- Responsive design
+
+### User Interface
+- Drag and drop file upload
+- Syntax highlighted code display
+- Clean and intuitive layout
+- Detailed analysis results
+
 ## Testing
 
-### Backend API Testing
-You can test the API using the FastAPI automatic documentation:
-- Swagger UI: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
-
-### Frontend Testing
-Run the test suite:
-```powershell
-npm test
-# or
-yarn test
+### Backend Testing
+Access the API documentation and testing interface at:
+```
+http://localhost:8000/docs
 ```
 
-## Building for Production
+### Frontend Testing
+Run the test suite with:
+```powershell
+cd frontend
+npm test
+```
 
-### Frontend Build
+## Development
+
+### Running in Development Mode
+1. Start the backend server (from project root):
+```powershell
+.\venv\Scripts\activate
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+2. Start the frontend development server (in another terminal):
+```powershell
+cd frontend
+npm run dev
+```
+
+### Building for Production
+1. Build the frontend:
 ```powershell
 cd frontend
 npm run build
-# or
-yarn build
 ```
 
-### Backend Production Deployment
-```powershell
-uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
-```
+2. The built files will be in the `frontend/dist` directory
 
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
 
 ## License
 
@@ -144,5 +157,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 Developed by Nitin Prajwal R © 2025
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/nitinprajwal/)
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-black)](https://github.com/nitinprajwal) 
+Connect with me:
+- LinkedIn: [https://www.linkedin.com/in/nitinprajwal/](https://www.linkedin.com/in/nitinprajwal/)
+- GitHub: [https://github.com/nitinprajwal](https://github.com/nitinprajwal) 
