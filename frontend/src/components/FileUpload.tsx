@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Group, Text, Button, rem, useMantineTheme } from '@mantine/core';
+import { Box, Text, Button, rem, useMantineTheme } from '@mantine/core';
 import { Dropzone } from '@mantine/dropzone';
 import { IconUpload, IconX, IconFile } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
@@ -34,12 +34,12 @@ export function FileUpload({ onFileSelect, isLoading }: FileUploadProps) {
     };
 
     return (
-        <div
+        <Box
+            p="2rem"
             style={{
-                padding: '2rem',
                 borderRadius: theme.radius.md,
-                backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
             }}
+            className="light-dark"
         >
             <Dropzone
                 openRef={openRef}
@@ -60,51 +60,51 @@ export function FileUpload({ onFileSelect, isLoading }: FileUploadProps) {
                     transform: isDragOver ? 'scale(1.02)' : 'scale(1)',
                 }}
             >
-                <Group position="center" spacing="xl" style={{ minHeight: rem(220), pointerEvents: 'none' }}>
+                <Box style={{ minHeight: rem(220), pointerEvents: 'none' }}>
                     <Dropzone.Accept>
                         <IconUpload
                             size="3.2rem"
                             stroke={1.5}
-                            color={theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]}
+                            style={{ color: 'var(--mantine-primary-color-filled)' }}
                         />
                     </Dropzone.Accept>
                     <Dropzone.Reject>
                         <IconX
                             size="3.2rem"
                             stroke={1.5}
-                            color={theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]}
+                            style={{ color: 'var(--mantine-color-red-filled)' }}
                         />
                     </Dropzone.Reject>
                     <Dropzone.Idle>
                         <IconFile size="3.2rem" stroke={1.5} />
                     </Dropzone.Idle>
 
-                    <div>
+                    <Box>
                         <Text size="xl" inline>
                             Drag & drop your code file here or click to select
                         </Text>
-                        <Text size="sm" color="dimmed" inline mt={7}>
+                        <Text size="sm" c="dimmed" inline mt={7}>
                             Supported file types: Python (.py), JavaScript (.js), React (.jsx)
                         </Text>
                         {isLoading && (
-                            <Text size="sm" color="blue" inline mt={7}>
+                            <Text size="sm" c="blue" inline mt={7}>
                                 Analyzing your code...
                             </Text>
                         )}
-                    </div>
-                </Group>
+                    </Box>
+                </Box>
             </Dropzone>
 
-            <Group position="center" mt="md">
+            <Box ta="center" mt="md">
                 <Button
                     onClick={() => openRef.current?.()}
                     variant="light"
                     loading={isLoading}
-                    leftIcon={<IconUpload size="1rem" />}
                 >
+                    <IconUpload size="1rem" style={{ marginRight: '0.5rem' }} />
                     Select File
                 </Button>
-            </Group>
-        </div>
+            </Box>
+        </Box>
     );
 } 

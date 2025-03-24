@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Paper, Title, Text, useMantineTheme } from '@mantine/core';
+import { Paper, Title, Text, Box } from '@mantine/core';
 import { CodeHighlight } from '@mantine/code-highlight';
 import { motion } from 'framer-motion';
 
@@ -10,7 +10,6 @@ interface CodeDisplayProps {
 }
 
 export function CodeDisplay({ originalCode, fileName, language }: CodeDisplayProps) {
-    const theme = useMantineTheme();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -27,22 +26,20 @@ export function CodeDisplay({ originalCode, fileName, language }: CodeDisplayPro
                 shadow="sm"
                 radius="md"
                 p="md"
-                style={{
-                    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-                }}
+                className="light-dark"
             >
                 <Title order={3} mb="sm">
                     Code Review
                 </Title>
-                <Text size="sm" color="dimmed" mb="md">
+                <Text size="sm" c="dimmed" mb="md">
                     File: {fileName}
                 </Text>
-                <Paper
+                <Box
                     style={{
                         maxHeight: '600px',
                         overflow: 'auto',
-                        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
                     }}
+                    className="light-dark"
                 >
                     <CodeHighlight
                         code={originalCode}
@@ -50,14 +47,14 @@ export function CodeDisplay({ originalCode, fileName, language }: CodeDisplayPro
                         withCopyButton
                         styles={{
                             copy: {
-                                backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+                                backgroundColor: 'var(--mantine-color-body)',
                             },
                             pre: {
                                 backgroundColor: 'transparent',
                             },
                         }}
                     />
-                </Paper>
+                </Box>
             </Paper>
         </motion.div>
     );

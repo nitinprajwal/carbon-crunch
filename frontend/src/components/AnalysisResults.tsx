@@ -1,4 +1,4 @@
-import { Paper, Title, Text, Grid, Badge, Progress, Stack, Group, ThemeIcon, List, Code, Box, Divider } from '@mantine/core';
+import { Paper, Title, Text, Grid, Badge, Stack, ThemeIcon, Code, Box, Divider } from '@mantine/core';
 import { IconCheck, IconX, IconAlertTriangle } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 import { RadialBarChart, RadialBar, ResponsiveContainer, Tooltip } from 'recharts';
@@ -62,11 +62,11 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
         >
             <Grid gutter="md">
                 <Grid.Col span={12}>
-                    <Paper shadow="sm" radius="md" p="xl" style={{ overflow: 'hidden' }}>
-                        <Group position="apart" mb="xl">
+                    <Paper shadow="sm" radius="md" p="xl" className="light-dark">
+                        <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--mantine-spacing-xl)' }}>
                             <div>
                                 <Title order={2}>Overall Score</Title>
-                                <Text size="sm" color="dimmed">Based on multiple criteria</Text>
+                                <Text size="sm" c="dimmed">Based on multiple criteria</Text>
                             </div>
                             <Badge
                                 size="xl"
@@ -76,7 +76,7 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                             >
                                 {results.total_score}/100
                             </Badge>
-                        </Group>
+                        </Box>
 
                         <div style={{ height: '300px' }}>
                             <ResponsiveContainer width="100%" height="100%">
@@ -90,11 +90,10 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                                     endAngle={-180}
                                 >
                                     <RadialBar
-                                        minAngle={15}
                                         background
-                                        clockWise={true}
                                         dataKey="score"
                                         cornerRadius={10}
+                                        isAnimationActive={false}
                                     />
                                     <Tooltip />
                                 </RadialBarChart>
@@ -106,7 +105,7 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                 <Grid.Col span={12}>
                     <Paper shadow="sm" radius="md" p="xl">
                         <Title order={2} mb="xl">Recommendations</Title>
-                        <Stack spacing="md">
+                        <Stack gap="md">
                             {(results.recommendations || []).map((rec: Recommendation, index) => (
                                 <motion.div
                                     key={index}
@@ -125,8 +124,8 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                                             }`,
                                         }}
                                     >
-                                        <Group position="apart" mb="xs">
-                                            <Group>
+                                        <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--mantine-spacing-xs)' }}>
+                                            <Box style={{ display: 'flex', alignItems: 'center', gap: 'var(--mantine-spacing-xs)' }}>
                                                 <ThemeIcon
                                                     size="sm"
                                                     variant="light"
@@ -137,8 +136,8 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                                                 >
                                                     {getSeverityIcon(rec.priority)}
                                                 </ThemeIcon>
-                                                <Text weight={500}>{rec.category}</Text>
-                                            </Group>
+                                                <Text fw={500}>{rec.category}</Text>
+                                            </Box>
                                             <Badge
                                                 variant="light"
                                                 color={
@@ -148,10 +147,10 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                                             >
                                                 {rec.priority}
                                             </Badge>
-                                        </Group>
+                                        </Box>
                                         <Text size="sm">{rec.suggestion}</Text>
                                         {rec.example_violation && (
-                                            <Text size="xs" color="dimmed" mt="xs">
+                                            <Text size="xs" c="dimmed" mt="xs">
                                                 Example: {rec.example_violation}
                                             </Text>
                                         )}
@@ -169,10 +168,10 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                             <Divider my="xl" label="Additional AI Analysis" labelPosition="center" />
                         </Grid.Col>
                         
-                    <Grid.Col span={12}>
-                        <Paper shadow="sm" radius="md" p="xl">
+                        <Grid.Col span={12}>
+                            <Paper shadow="sm" radius="md" p="xl">
                                 <Title order={2} mb="xl">Extended Code Analysis</Title>
-                            <Grid gutter="md">
+                                <Grid>
                                     {Object.entries(results.groq_analysis.insights || {}).map(([category, insights], index) => {
                                         // Skip categories that are already covered in the main analysis
                                         if (['documentation', 'naming_conventions', 'function_modularity', 'formatting', 'reusability', 'best_practices'].includes(category)) {
@@ -180,21 +179,21 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                                         }
                                         
                                         return insights.length > 0 && (
-                                        <Grid.Col key={category} span={6}>
-                                            <motion.div
-                                                variants={itemVariants}
-                                                initial="hidden"
-                                                animate="visible"
-                                                transition={{ delay: index * 0.1 }}
-                                            >
+                                            <Grid.Col key={category} span={6}>
+                                                <motion.div
+                                                    variants={itemVariants}
+                                                    initial="hidden"
+                                                    animate="visible"
+                                                    transition={{ delay: index * 0.1 }}
+                                                >
                                                     <Paper p="md" radius="sm" withBorder>
-                                                    <Title order={4} mb="md">
-                                                        {category.split('_').map(word => 
-                                                            word.charAt(0).toUpperCase() + word.slice(1)
-                                                        ).join(' ')}
-                                                    </Title>
-                                                        <Stack spacing="md">
-                                                        {insights.map((insight, i) => (
+                                                        <Title order={4} mb="md">
+                                                            {category.split('_').map(word => 
+                                                                word.charAt(0).toUpperCase() + word.slice(1)
+                                                            ).join(' ')}
+                                                        </Title>
+                                                        <Stack gap="md">
+                                                            {insights.map((insight: string, i: number) => (
                                                                 <Box key={i}>
                                                                     <div className="markdown-content">
                                                                         <ReactMarkdown 
@@ -203,45 +202,31 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                                                                                 p: ({ children }) => (
                                                                                     <Text mb="xs" style={{ whiteSpace: 'pre-wrap' }}>{children}</Text>
                                                                                 ),
-                                                                                code: ({ node, inline, className, children, ...props }) => {
-                                                                                    const match = /language-(\w+)/.exec(className || '');
-                                                                                    return !inline ? (
-                                                                                        <Box mb="xs">
-                                                                                            <Code 
-                                                                                                block 
-                                                                                                style={{ 
-                                                                                                    backgroundColor: '#f8f9fa',
-                                                                                                    padding: '12px',
-                                                                                                    borderRadius: '4px',
-                                                                                                    fontSize: '0.9em'
-                                                                                                }}
-                                                                                            >
-                                                                                                {String(children).replace(/\n$/, '')}
-                                                                                            </Code>
-                                                                                        </Box>
-                                                                                    ) : (
+                                                                                code: ({ children }) => (
+                                                                                    <Box mb="xs">
                                                                                         <Code 
+                                                                                            block 
                                                                                             style={{ 
-                                                                                                backgroundColor: '#f8f9fa',
-                                                                                                padding: '2px 6px',
+                                                                                                backgroundColor: 'var(--mantine-color-gray-light)',
+                                                                                                padding: '12px',
                                                                                                 borderRadius: '4px',
                                                                                                 fontSize: '0.9em'
                                                                                             }}
                                                                                         >
-                                                                                            {children}
+                                                                                            {String(children).replace(/\n$/, '')}
                                                                                         </Code>
-                                                                                    );
-                                                                                },
+                                                                                    </Box>
+                                                                                ),
                                                                                 ul: ({ children }) => (
-                                                                                    <Stack spacing="xs">
+                                                                                    <Stack gap="xs">
                                                                                         {children}
                                                                                     </Stack>
                                                                                 ),
                                                                                 li: ({ children }) => (
-                                                                                    <Group spacing="xs" noWrap align="flex-start">
+                                                                                    <Box style={{ display: 'flex', gap: 'var(--mantine-spacing-xs)', alignItems: 'flex-start' }}>
                                                                                         <Text>•</Text>
                                                                                         <Text size="sm" style={{ flex: 1 }}>{children}</Text>
-                                                                                    </Group>
+                                                                                    </Box>
                                                                                 ),
                                                                                 h3: ({ children }) => (
                                                                                     <Title order={3} mb="sm" size="h4">{children}</Title>
@@ -250,10 +235,10 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                                                                                     <Title order={4} mb="sm" size="h5">{children}</Title>
                                                                                 ),
                                                                                 strong: ({ children }) => (
-                                                                                    <Text span weight={700}>{children}</Text>
+                                                                                    <Text span fw={700}>{children}</Text>
                                                                                 ),
                                                                                 em: ({ children }) => (
-                                                                                    <Text span italic>{children}</Text>
+                                                                                    <Text span fs="italic">{children}</Text>
                                                                                 )
                                                                             }}
                                                                         >
@@ -263,14 +248,14 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                                                                 </Box>
                                                             ))}
                                                         </Stack>
-                                                </Paper>
-                                            </motion.div>
-                                        </Grid.Col>
+                                                    </Paper>
+                                                </motion.div>
+                                            </Grid.Col>
                                         );
                                     })}
-                            </Grid>
-                        </Paper>
-                    </Grid.Col>
+                                </Grid>
+                            </Paper>
+                        </Grid.Col>
                     </>
                 )}
             </Grid>

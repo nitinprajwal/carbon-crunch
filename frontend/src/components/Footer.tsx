@@ -1,13 +1,13 @@
-import { Group, ActionIcon, Text } from '@mantine/core';
+import { Box, ActionIcon, Text } from '@mantine/core';
 import { IconBrandGithub, IconBrandLinkedin } from '@tabler/icons-react';
 
 export function Footer() {
   return (
-    <Group position="apart" py="md" sx={{ height: '60px' }}>
-      <Text size="sm" weight={500}>
+    <Box py="md" style={{ height: '60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Text size="sm" fw={500}>
         © 2025 Developed by Nitin Prajwal R
       </Text>
-      <Group spacing={12}>
+      <Box style={{ display: 'flex', gap: '12px' }}>
         <ActionIcon
           size="lg"
           variant="light"
@@ -28,7 +28,7 @@ export function Footer() {
         >
           <IconBrandLinkedin size="1.2rem" />
         </ActionIcon>
-      </Group>
-    </Group>
+      </Box>
+    </Box>
   );
 } 
