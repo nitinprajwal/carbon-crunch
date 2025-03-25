@@ -2,6 +2,8 @@
 
 A modern web application for analyzing code quality and providing detailed insights for Python, JavaScript, and React files.
 
+https://nitinprajwal.github.io/carbon-crunch/
+
 ## Features
 
 - 📊 Real-time code analysis
