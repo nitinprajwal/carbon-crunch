@@ -106,6 +106,7 @@ The application will be available at `http://localhost:5173`
 - Clean and intuitive layout
 - Detailed analysis results
 
+image.png
 ## Testing
 
 ### Backend Testing
