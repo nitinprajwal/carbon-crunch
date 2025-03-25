@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { AnalysisResult, Recommendation } from '../types/analysis';
 import './AnalysisResults.css';
+import React from 'react';
 
 interface AnalysisResultsProps {
     results: AnalysisResult;
@@ -76,6 +77,73 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                             >
                                 {results.total_score}/100
                             </Badge>
+                        </Box>
+
+                        {/* Score Breakdown Table */}
+                        <Box mb="md">
+                            <Title order={4} mb="md">Score Breakdown</Title>
+                            <Paper withBorder p="xs">
+                                <Box style={{ display: 'grid', gridTemplateColumns: 'minmax(200px, 1fr) 80px', gap: '8px' }}>
+                                    <Text fw={700} size="sm">Category</Text>
+                                    <Text fw={700} size="sm" ta="center">Score</Text>
+                                    
+                                    {Object.entries(results.category_scores).map(([category, score]) => (
+                                        <React.Fragment key={category}>
+                                            <Text size="sm">
+                                                {category.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                                            </Text>
+                                            <Badge 
+                                                size="md"
+                                                variant="filled"
+                                                color={
+                                                    score >= 80 ? 'green' :
+                                                    score >= 60 ? 'yellow' : 'red'
+                                                }
+                                                style={{ width: '60px', justifySelf: 'center' }}
+                                            >
+                                                {score}/100
+                                            </Badge>
+                                        </React.Fragment>
+                                    ))}
+                                    
+                                    <Box style={{ 
+                                        gridColumn: '1 / -1', 
+                                        height: '1px', 
+                                        background: 'var(--mantine-color-gray-3)', 
+                                        margin: '8px 0' 
+                                    }} />
+                                    
+                                    <Text fw={700} size="sm">Overall Score</Text>
+                                    <Badge 
+                                        size="md"
+                                        variant="filled"
+                                        color={
+                                            results.total_score >= 80 ? 'green' :
+                                            results.total_score >= 60 ? 'yellow' : 'red'
+                                        }
+                                        style={{ width: '60px', justifySelf: 'center' }}
+                                    >
+                                        {results.total_score}/100
+                                    </Badge>
+                                </Box>
+                            </Paper>
+                        </Box>
+
+                        {/* Category Descriptions */}
+                        <Box mb="xl" size="xs">
+                            <Text size="xs" c="dimmed" fw={500} mb="xs">Category Explanations:</Text>
+                            <Grid>
+                                <Grid.Col span={6}>
+                                    <Text size="xs" c="dimmed"><b>Naming Conventions:</b> Variable, function and class naming</Text>
+                                    <Text size="xs" c="dimmed"><b>Function Modularity:</b> Proper function design and organization</Text>
+                                    <Text size="xs" c="dimmed"><b>Documentation:</b> Code comments and documentation quality</Text>
+                                </Grid.Col>
+                                <Grid.Col span={6}>
+                                    <Text size="xs" c="dimmed"><b>Formatting:</b> Code style and formatting consistency</Text>
+                                    <Text size="xs" c="dimmed"><b>Reusability:</b> Code reuse and modularity</Text>
+                                    <Text size="xs" c="dimmed"><b>Best Practices:</b> Adherence to language best practices</Text>
+                                </Grid.Col>
+                            </Grid>
                         </Box>
 
                         <div style={{ height: '300px' }}>
@@ -203,19 +271,17 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                                                                                     <Text mb="xs" style={{ whiteSpace: 'pre-wrap' }}>{children}</Text>
                                                                                 ),
                                                                                 code: ({ children }) => (
-                                                                                    <Box mb="xs">
-                                                                                        <Code 
-                                                                                            block 
-                                                                                            style={{ 
-                                                                                                backgroundColor: 'var(--mantine-color-gray-light)',
-                                                                                                padding: '12px',
-                                                                                                borderRadius: '4px',
-                                                                                                fontSize: '0.9em'
-                                                                                            }}
-                                                                                        >
-                                                                                            {String(children).replace(/\n$/, '')}
-                                                                                        </Code>
-                                                                                    </Box>
+                                                                                    <Code 
+                                                                                        block 
+                                                                                        style={{ 
+                                                                                            backgroundColor: 'var(--mantine-color-gray-light)',
+                                                                                            padding: '12px',
+                                                                                            borderRadius: '4px',
+                                                                                            fontSize: '0.9em'
+                                                                                        }}
+                                                                                    >
+                                                                                        {String(children).replace(/\n$/, '')}
+                                                                                    </Code>
                                                                                 ),
                                                                                 ul: ({ children }) => (
                                                                                     <Stack gap="xs">
@@ -225,7 +291,9 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                                                                                 li: ({ children }) => (
                                                                                     <Box style={{ display: 'flex', gap: 'var(--mantine-spacing-xs)', alignItems: 'flex-start' }}>
                                                                                         <Text>•</Text>
-                                                                                        <Text size="sm" style={{ flex: 1 }}>{children}</Text>
+                                                                                        <Box style={{ flex: 1 }}>
+                                                                                            {children}
+                                                                                        </Box>
                                                                                     </Box>
                                                                                 ),
                                                                                 h3: ({ children }) => (

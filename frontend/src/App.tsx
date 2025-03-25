@@ -79,7 +79,7 @@ export default function App() {
                         <Group style={{ justifyContent: 'space-between' }}>
                             <Group style={{ gap: '1rem' }}>
                                 <Image
-                                    src="/images/image.png"
+                                    src="https://www.carboncrunch.in/assets/logoCC-CbQ2kroI.png"
                                     alt="Carbon Crunch Logo"
                                     width={40}
                                     height={40}
